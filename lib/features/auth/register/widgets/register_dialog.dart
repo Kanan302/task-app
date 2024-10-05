@@ -12,13 +12,11 @@ class RegisterDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.pushReplacementNamed(context, AppRoutes.home.path);
+            Navigator.pushReplacementNamed(context, AppRoutes.navbar.path);
           },
           child: const Text('Bağla'),
         ),
       ],
     );
-    
   }
 }

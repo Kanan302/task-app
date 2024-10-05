@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:task/features/auth/pages/login/bloc/login_bloc.dart';
-import 'package:task/core/constants/app_colors.dart';
+import 'package:task/features/auth/register/bloc/register_bloc.dart';
 import 'package:task/core/constants/app_routes.dart';
-import 'package:task/core/widgets/app_elevated_button.dart';
+import 'package:task/core/widgets/app_button.dart';
 import 'package:task/core/widgets/app_snack_bar.dart';
-import 'package:task/core/widgets/app_text_button.dart';
 import 'package:task/core/widgets/app_text_field.dart';
-import 'package:task/features/auth/pages/login/widgets/login_checkbox_text.dart';
-import 'package:task/features/auth/pages/login/widgets/login_text_detector.dart';
-import 'package:task/providers/visibility_provider.dart';
+import 'package:task/features/auth/register/widgets/register_dialog.dart';
+import 'package:task/features/auth/register/widgets/register_text_detector.dart';
+import 'package:task/provider/visibility_provider.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,16 +34,19 @@ class _LoginPageState extends State<LoginPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Center(
-              child: BlocListener<LoginBloc, LoginState>(
+              child: BlocListener<RegisterBloc, RegisterState>(
                 listener: (context, state) {
-                  if (state is LoginLoading) {
-                    CircularProgressIndicator;
-                  } else if (state is LoginSuccess) {
-                    AppSnackBar.show(context, "Giriş Müvəffəqiyyətli!",
-                        backgroundColor: AppColors.black);
-                    Navigator.pushReplacementNamed(
-                        context, AppRoutes.home.path);
-                  } else if (state is LoginFailure) {
+                  if (state is RegisterLoading) {
+                    const CircularProgressIndicator();
+                  } else if (state is RegisterSuccess) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const RegisterDialog();
+                      },
+                    );
+                  } else if (state is RegisterFailure) {
                     AppSnackBar.show(context, "Giriş Uğursuz: ${state.error}");
                   }
                 },
@@ -55,10 +58,10 @@ class _LoginPageState extends State<LoginPage> {
                       SvgPicture.asset(
                         'assets/images/login_register_logo.svg',
                         width: 200,
-                        height: 200,
+                        height: 180,
                       ),
                       const Text(
-                        'Welcome back! Glad to see you, Again!',
+                        'Welcome! Create a new account.',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -91,9 +94,9 @@ class _LoginPageState extends State<LoginPage> {
                               return null;
                             },
                           ),
+                          const SizedBox(height: 15),
                         ],
                       ),
-                      const SizedBox(height: 15),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -128,43 +131,68 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      const SizedBox(height: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const LoginCheckboxText(text: 'Remember me'),
-                          AppTextButton(
-                            text: 'Forgot password?',
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, AppRoutes.reset.path);
+                          const Text(
+                            'Confirm',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Consumer<VisibilityProvider>(
+                            builder: (context, visibilityProvider, child) {
+                              return AppTextField(
+                                hintText: 'Confirm your password',
+                                controller: _confirmPasswordController,
+                                obscureText: visibilityProvider
+                                    .isObscuredConfirmPassword,
+                                prefixIcon: Icons.lock_outline,
+                                onPressed: visibilityProvider
+                                    .toggleConfirmPasswordVisibility,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Şifrə boş ola bilməz';
+                                  } else if (value.length < 6) {
+                                    return 'Şifrə ən azı 6 simvol olmalıdır';
+                                  }
+                                  return null;
+                                },
+                              );
                             },
-                            color: AppColors.lightNavy,
-                          )
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 20),
                       AppElevatedButton(
-                        text: 'LOG IN',
+                        text: 'SIGN UP',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             final email = _emailController.text.trim();
                             final password = _passwordController.text.trim();
-
-                            context
-                                .read<LoginBloc>()
-                                .add(LoginButtonPressed(email, password));
+                            final confirmPassword =
+                                _confirmPasswordController.text.trim();
+                            if (password != confirmPassword) {
+                              AppSnackBar.show(
+                                  context, "Şifrələr eyni olmalıdır.");
+                            } else {
+                              context
+                                  .read<RegisterBloc>()
+                                  .add(RegisterButtonPressed(email, password));
+                            }
                           }
                         },
                       ),
                       const SizedBox(height: 5),
-                      LoginTextDetector(
-                        text: 'New Member? ',
-                        onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.register.path);
-                        },
-                        registerText: 'Register now',
-                      ),
+                      RegisterTextDetector(
+                          text: 'Already a member? ',
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRoutes.login.path);
+                          },
+                          loginText: 'Log In')
                     ],
                   ),
                 ),
@@ -181,5 +209,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
   }
 }

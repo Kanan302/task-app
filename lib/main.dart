@@ -3,17 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:task/features/auth/pages/register/bloc/register_bloc.dart';
-import 'package:task/features/auth/pages/login/bloc/login_bloc.dart';
+import 'package:task/features/auth/register/bloc/register_bloc.dart';
+import 'package:task/features/auth/login/bloc/login_bloc.dart';
 import 'package:task/core/constants/app_routes.dart';
-import 'package:task/features/auth/pages/login/login.dart';
-import 'package:task/features/auth/pages/register/register.dart';
-import 'package:task/features/auth/pages/reset/bloc/reset_password_bloc.dart';
-import 'package:task/features/auth/pages/reset/reset_password.dart';
-import 'package:task/features/splash/splash.dart';
-import 'package:task/features/home.dart';
+import 'package:task/features/auth/login/login.dart';
+import 'package:task/features/auth/register/register.dart';
+import 'package:task/features/auth/reset/bloc/reset_password_bloc.dart';
+import 'package:task/features/auth/reset/reset_password.dart';
+import 'package:task/features/pages/splash/splash.dart';
+import 'package:task/features/pages/nav_bar.dart';
 import 'package:task/firebase_options.dart';
-import 'package:task/providers/visibility_provider.dart';
+import 'package:task/provider/navigation_provider.dart';
+import 'package:task/provider/visibility_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => VisibilityProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NavigationProvider(),
         ),
         BlocProvider(
           create: (context) => LoginBloc(),
@@ -51,7 +55,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.login.path: (context) => const LoginPage(),
           AppRoutes.register.path: (context) => const RegisterPage(),
           AppRoutes.reset.path: (context) => const ResetPasswordPage(),
-          AppRoutes.home.path: (context) => const HomePage(),
+          AppRoutes.navbar.path: (context) => const NavBar(),
         },
       ),
     );

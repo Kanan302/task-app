@@ -3,7 +3,7 @@ enum AppRoutes {
   login(path: '/login'),
   register(path: '/register'),
   reset(path: '/reset'),
-  home(path: '/homepage');
+  navbar(path: '/navbar');
 
   const AppRoutes({required this.path});
   final String path;

@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:task/core/widgets/app_button.dart';
 import 'package:task/core/widgets/app_snack_bar.dart';
 import 'package:task/core/widgets/app_text_field.dart';
-import 'package:task/features/auth/pages/reset/bloc/reset_password_bloc.dart';
+import 'package:task/features/auth/reset/bloc/reset_password_bloc.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
