@@ -1,0 +1,18 @@
+part of 'register_bloc.dart';
+
+sealed class RegisterEvent extends Equatable {
+  const RegisterEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RegisterButtonPressed extends RegisterEvent {
+  final String email;
+  final String password;
+
+  const RegisterButtonPressed(this.email, this.password);
+
+  @override
+  List<Object> get props => [email, password];
+}
