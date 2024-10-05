@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/core/constants/app_colors.dart';
-import 'package:task/features/pages/home/widgets/home_text.dart';
 import 'package:task/features/pages/home/widgets/home_search_field.dart';
+import 'package:task/features/pages/home/widgets/home_text.dart';
 import 'package:task/services/cubit/user_cubit.dart';
+import 'package:task/services/cubit/sort_cubit.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -40,14 +41,38 @@ class HomePage extends StatelessWidget {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buildHeaderText('Name', flex: 1),
-                  buildHeaderText('Surname', flex: 2),
-                  buildHeaderText('Email', flex: 2),
-                  buildHeaderText('Registered Date', flex: 2),
-                ],
+              child: BlocBuilder<SortCubit, Map<String, dynamic>>(
+                builder: (context, sortState) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      buildSortableHeader(
+                        'Name',
+                        flex: 1,
+                        sortState: sortState,
+                        context: context,
+                      ),
+                      buildSortableHeader(
+                        'Surname',
+                        flex: 2,
+                        sortState: sortState,
+                        context: context,
+                      ),
+                      buildSortableHeader(
+                        'Email',
+                        flex: 2,
+                        sortState: sortState,
+                        context: context,
+                      ),
+                      buildSortableHeader(
+                        'Date',
+                        flex: 2,
+                        sortState: sortState,
+                        context: context,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),

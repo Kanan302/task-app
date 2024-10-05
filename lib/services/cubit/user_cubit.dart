@@ -8,7 +8,8 @@ class UserCubit extends Cubit<List<dynamic>> {
   List<dynamic> _users = [];
 
   Future<void> loadUsers() async {
-    final String response = await rootBundle.loadString('assets/json/user.json');
+    final String response =
+        await rootBundle.loadString('assets/json/user.json');
     final data = await json.decode(response);
 
     _users = data['users'];

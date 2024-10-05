@@ -13,6 +13,7 @@ import 'package:task/features/auth/reset/reset_password.dart';
 import 'package:task/features/pages/splash/splash.dart';
 import 'package:task/features/pages/nav_bar.dart';
 import 'package:task/firebase_options.dart';
+import 'package:task/services/cubit/sort_cubit.dart';
 import 'package:task/services/cubit/user_cubit.dart';
 import 'package:task/services/provider/navigation_provider.dart';
 import 'package:task/services/provider/visibility_provider.dart';
@@ -49,11 +50,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => UserCubit()..loadUsers(),
         ),
+        BlocProvider(
+          create: (context) => SortCubit(),
+        ),
       ],
       child: MaterialApp(
         title: 'Task App',
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.splash.path,
+        initialRoute: AppRoutes.navbar.path,
         routes: {
           AppRoutes.splash.path: (context) => const SplashPage(),
           AppRoutes.login.path: (context) => const LoginPage(),

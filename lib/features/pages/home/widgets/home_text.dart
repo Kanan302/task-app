@@ -1,22 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/core/constants/app_colors.dart';
-
-// Başlıq mətni üçün metodu istifadə edirik
-Widget buildHeaderText(String text, {int flex = 1}) {
-  return Expanded(
-    flex: flex,
-    child: Center(
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          color: AppColors.white, // Başlıqların rəngi
-        ),
-      ),
-    ),
-  );
-}
+import 'package:task/services/cubit/sort_cubit.dart';
+import 'package:task/services/cubit/user_cubit.dart';
 
 // Məlumatın göstərilməsi üçün metodu istifadə edirik
 Widget buildItemText(String? text,
@@ -33,6 +19,46 @@ Widget buildItemText(String? text,
         style: const TextStyle(
           color: AppColors.black, // Məlumatların rəngi
         ),
+      ),
+    ),
+  );
+}
+
+// Sıralama üçün başlıq metodu əlavə edirik
+Widget buildSortableHeader(String title,
+    {int flex = 1,
+    required Map<String, dynamic> sortState,
+    required BuildContext context}) {
+  final sortColumn = sortState['sortColumn'];
+  final ascending = sortState['ascending'];
+
+  return Expanded(
+    flex: flex,
+    child: GestureDetector(
+      onTap: () {
+        context.read<SortCubit>().sort(title.toLowerCase());
+        context
+            .read<UserCubit>()
+            .sortUsers(title.toLowerCase(), sortState['ascending']);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColors.white,
+            ),
+          ),
+          if (sortColumn == title.toLowerCase())
+            Icon(
+              ascending ? Icons.arrow_upward : Icons.arrow_downward,
+              color: AppColors.white,
+              size: 16,
+            ),
+        ],
       ),
     ),
   );
