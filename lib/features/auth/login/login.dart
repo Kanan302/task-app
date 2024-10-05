@@ -11,7 +11,7 @@ import 'package:task/core/widgets/app_text_button.dart';
 import 'package:task/core/widgets/app_text_field.dart';
 import 'package:task/features/auth/login/widgets/login_checkbox_text.dart';
 import 'package:task/features/auth/login/widgets/login_text_detector.dart';
-import 'package:task/provider/visibility_provider.dart';
+import 'package:task/services/provider/visibility_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

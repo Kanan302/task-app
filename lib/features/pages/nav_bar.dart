@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task/features/pages/home/home.dart';
-import 'package:task/provider/navigation_provider.dart';
+import 'package:task/services/provider/navigation_provider.dart';
 import 'profile/profile.dart';
 
 class NavBar extends StatelessWidget {
@@ -17,7 +17,6 @@ class NavBar extends StatelessWidget {
     ];
 
     return Scaffold(
-      
       body: SafeArea(
         child:
             pages[navigationProvider.selectedIndex], // Aktiv səhifəni göstərin

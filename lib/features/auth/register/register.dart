@@ -9,7 +9,7 @@ import 'package:task/core/widgets/app_snack_bar.dart';
 import 'package:task/core/widgets/app_text_field.dart';
 import 'package:task/features/auth/register/widgets/register_dialog.dart';
 import 'package:task/features/auth/register/widgets/register_text_detector.dart';
-import 'package:task/provider/visibility_provider.dart';
+import 'package:task/services/provider/visibility_provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

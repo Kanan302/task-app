@@ -13,8 +13,9 @@ import 'package:task/features/auth/reset/reset_password.dart';
 import 'package:task/features/pages/splash/splash.dart';
 import 'package:task/features/pages/nav_bar.dart';
 import 'package:task/firebase_options.dart';
-import 'package:task/provider/navigation_provider.dart';
-import 'package:task/provider/visibility_provider.dart';
+import 'package:task/services/cubit/user_cubit.dart';
+import 'package:task/services/provider/navigation_provider.dart';
+import 'package:task/services/provider/visibility_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               ResetPasswordBloc(firebaseAuth: FirebaseAuth.instance),
+        ),
+        BlocProvider(
+          create: (context) => UserCubit()..loadUsers(),
         ),
       ],
       child: MaterialApp(

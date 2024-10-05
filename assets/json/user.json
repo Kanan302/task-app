@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "name": "Kanan",
+      "surname": "Alizade",
+      "email": "kanan.alizade@gmail.com",
+      "registeredDate": "2004-09-30"
+    },
+    {
+      "name": "Senan",
+      "surname": "Memmedov",
+      "email": "senan.memmedov@gmail.com",
+      "registeredDate": "2004-06-19"
+    },
+    {
+      "name": "Fuad",
+      "surname": "Sadiqov",
+      "email": "fuad.sadiqov@gmail.com",
+      "registeredDate": "2004-04-20"
+    },
+    {
+      "name": "Ilham",
+      "surname": "Quliyev",
+      "email": "ilham.quliyev@gmail.com",
+      "registeredDate": "2004-08-26"
+    },
+    {
+      "name": "Aysu",
+      "surname": "Hüseynova",
+      "email": "aysu.huseynova@gmail.com",
+      "registeredDate": "2005-01-15"
+    },
+    {
+      "name": "Elvin",
+      "surname": "Rzayev",
+      "email": "elvin.rzayev@gmail.com",
+      "registeredDate": "2003-11-05"
+    },
+    {
+      "name": "Gülnar",
+      "surname": "Mammadova",
+      "email": "gulnar.mammadova@gmail.com",
+      "registeredDate": "2006-03-10"
+    },
+    {
+      "name": "Tural",
+      "surname": "Ismayilov",
+      "email": "tural.ismayilov@gmail.com",
+      "registeredDate": "2004-12-01"
+    },
+    {
+      "name": "Zeynab",
+      "surname": "Qasımova",
+      "email": "zeynab.qasimova@gmail.com",
+      "registeredDate": "2005-07-22"
+    },
+    {
+      "name": "Rauf",
+      "surname": "Abdullayev",
+      "email": "rauf.abdullayev@gmail.com",
+      "registeredDate": "2004-02-14"
+    },
+    {
+      "name": "Leyla",
+      "surname": "Farzaliyeva",
+      "email": "leyla.farzaliyeva@gmail.com",
+      "registeredDate": "2003-10-30"
+    },
+    {
+      "name": "Kamran",
+      "surname": "Aliyev",
+      "email": "kamran.aliyev@gmail.com",
+      "registeredDate": "2005-05-25"
+    },
+    {
+      "name": "Nigar",
+      "surname": "Hüseynli",
+      "email": "nigar.huseynli@gmail.com",
+      "registeredDate": "2006-02-18"
+    }
+  ]
+}

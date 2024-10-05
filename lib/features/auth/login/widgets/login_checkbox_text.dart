@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task/provider/visibility_provider.dart';
+import 'package:task/services/provider/visibility_provider.dart';
 
 class LoginCheckboxText extends StatelessWidget {
   final String text;

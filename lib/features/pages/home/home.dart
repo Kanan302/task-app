@@ -1,30 +1,89 @@
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:task/core/constants/app_routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task/core/constants/app_colors.dart';
+import 'package:task/features/pages/home/widgets/home_text.dart';
+import 'package:task/features/pages/home/widgets/home_search_field.dart';
+import 'package:task/services/cubit/user_cubit.dart';
 
-// ignore_for_file: use_build_context_synchronously
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  // void _logout(BuildContext context) async {
-  //   await FirebaseAuth.instance.signOut();
-
-  //   // mounted yoxlaması ilə təhlükəsiz Context istifadə edin
-
-  //   if (mounted) {
-  //     Navigator.pushReplacementNamed(context, AppRoutes.login.path);
-  //   }
-  // }
-
-  @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Home Page Content'),
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          SizedBox(height: screenHeight * 0.03),
+
+          // Axtarış fieldi
+          SearchField(
+            text: 'Search',
+            onChanged: (query) {
+              context.read<UserCubit>().filterUsers(query);
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          // Cədvəl başlıqları
+          Container(
+            decoration: const BoxDecoration(
+              color: AppColors.blue,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buildHeaderText('Name', flex: 1),
+                  buildHeaderText('Surname', flex: 2),
+                  buildHeaderText('Email', flex: 2),
+                  buildHeaderText('Registered Date', flex: 2),
+                ],
+              ),
+            ),
+          ),
+          const Divider(),
+
+          // Jsondan gələn datalar
+          Expanded(
+            child: BlocBuilder<UserCubit, List<dynamic>>(
+              builder: (context, users) {
+                if (users.isEmpty) {
+                  return const Center(
+                    child: Text('No users found'),
+                  );
+                }
+                return ListView.builder(
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    var user = users[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          buildItemText(user['name'], flex: 2),
+                          buildItemText(user['surname'], flex: 2),
+                          buildItemText(user['email'], flex: 3),
+                          buildItemText(user['registeredDate'], flex: 2),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
