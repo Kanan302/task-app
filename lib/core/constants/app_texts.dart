@@ -1,3 +1,4 @@
+// App-də istifadə olunan textlər
 class AppTexts {
   // login page
   static const String loginSuccessful = 'Giriş Uğurlu!';

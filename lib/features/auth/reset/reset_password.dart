@@ -25,27 +25,31 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: Navigator.of(context).pop,
+          onPressed: Navigator.of(context).pop, // Geri düyməsi
           icon: const Icon(Icons.arrow_back),
         ),
-        title:  const Text(AppTexts.resetYourPassword),
+        title: const Text(AppTexts.resetYourPassword), // Səhifə başlığı
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20), // Daxili boşluq
             child: Center(
               child: BlocListener<ResetPasswordBloc, ResetPasswordState>(
+                // BlocListener vasitəsilə vəziyyət dəyişikliklərini dinlə
                 listener: (context, state) {
                   if (state is ResetPasswordLoading) {
-                    const CircularProgressIndicator();
+                    const CircularProgressIndicator(); // Yüklənmə göstəricisi
                   } else if (state is ResetPasswordSuccess) {
                     AppSnackBar.show(
-                        context, AppTexts.sendedLink,
-                        backgroundColor: Colors.black);
+                      context,
+                      AppTexts.sendedLink,
+                      backgroundColor: Colors.black,
+                    );
                   } else if (state is ResetPasswordFailure) {
-                    AppSnackBar.show(
-                        context, 'Yeniləmə Uğursuz: ${state.error}');
+                    AppSnackBar.show(context,
+                        'Yeniləmə Uğursuz: ${state.error}'); // Xəta mesajı
                   }
                 },
                 child: Form(
@@ -54,16 +58,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     children: [
                       SizedBox(height: screenHeight * 0.06),
                       SvgPicture.asset(
-                        'assets/images/login_register_logo.svg',
+                        'assets/images/login_register_logo.svg', // Loqo şəkli
                         width: 200,
                         height: 200,
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 15), // Boşluq
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            AppTexts.email,
+                            AppTexts.email, // E-poçt başlığı
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -71,12 +75,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           ),
                           const SizedBox(height: 5),
                           AppTextField(
-                            hintText: AppTexts.enterEmail,
+                            hintText:
+                                AppTexts.enterEmail, // E-poçt üçün göstəriş
                             controller: _emailController,
                             obscureText: false,
                             prefixIcon: Icons.email_outlined,
                             onPressed: null,
                             validator: (value) {
+                              // Forma doğrulama funksiyası
                               if (value == null || value.isEmpty) {
                                 return AppTexts.emptyEmail;
                               } else if (!value.contains('@')) {
@@ -95,8 +101,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           if (_formKey.currentState!.validate()) {
                             final email = _emailController.text.trim();
                             context
-                                .read<ResetPasswordBloc>()
-                                .add(ResetPasswordRequested(email));
+                                .read<
+                                    ResetPasswordBloc>() // ResetPasswordBloc-dan istifadə et
+                                .add(ResetPasswordRequested(
+                                    email)); // E-poçt sıfırlama sorğusu göndər
                           }
                         },
                       ),

@@ -15,14 +15,16 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     on<ResetPasswordRequested>(_onResetPasswordRequested);
   }
 
+  // Şifrənin sıfırlanması üçün tələb olunan hadisəni emal edən metod
   Future<void> _onResetPasswordRequested(
       ResetPasswordRequested event, Emitter<ResetPasswordState> emit) async {
-    emit(ResetPasswordLoading());
+    emit(ResetPasswordLoading()); // Yüklənmə vəziyyətini təqdim et
     try {
       await _firebaseAuth!.sendPasswordResetEmail(email: event.email);
-      emit(ResetPasswordSuccess());
+      emit(ResetPasswordSuccess()); // Müvəffəqiyyətli vəziyyəti təqdim et
     } catch (error) {
-      emit(ResetPasswordFailure(error.toString()));
+      emit(ResetPasswordFailure(
+          error.toString())); // Uğursuz vəziyyəti təqdim et
     }
   }
 }

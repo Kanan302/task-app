@@ -21,44 +21,47 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  // İstifadəçi daxil etməsi üçün kontrolerlər
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); // Formu tanıyan global açar
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height; // Ekran hündürlüyü
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20), // İki tərəfdən boşluq
             child: Center(
-              child: BlocListener<RegisterBloc, RegisterState>(
+              child: BlocListener<RegisterBloc, RegisterState>( // BLoC dinləyicisi
                 listener: (context, state) {
+                  // Vəziyyət dəyişikliklərinə reaksiya
                   if (state is RegisterLoading) {
-                    const CircularProgressIndicator();
+                    const CircularProgressIndicator(); // Yüklenme indikatoru
                   } else if (state is RegisterSuccess) {
+                    // Uğurlu qeydiyyat
                     showDialog(
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) {
-                        return const RegisterDialog();
+                        return const RegisterDialog(); // Qeydiyyat uğurlu olduğunda dialog açılır
                       },
                     );
                   } else if (state is RegisterFailure) {
-                    AppSnackBar.show(context, "Giriş Uğursuz: ${state.error}");
+                    AppSnackBar.show(context, "Giriş Uğursuz: ${state.error}"); // Qeydiyyat uğursuz oldu
                   }
                 },
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      SizedBox(height: screenHeight * 0.06),
+                      SizedBox(height: screenHeight * 0.06), // Ekranın yuxarı hissəsi
                       SvgPicture.asset(
-                        'assets/images/login_register_logo.svg',
+                        'assets/images/login_register_logo.svg', // Logo
                         width: 200,
                         height: 180,
                       ),
@@ -89,9 +92,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             onPressed: null,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return AppTexts.emptyEmail;
+                                return AppTexts.emptyEmail; // Boş e-poçt yoxlanışı
                               } else if (!value.endsWith('@gmail.com')) {
-                                return 'Email @gmail.com ilə bitməlidir';
+                                return 'Email @gmail.com ilə bitməlidir'; // E-poçt formatı yoxlanışı
                               }
                               return null;
                             },
@@ -110,21 +113,19 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          Consumer<VisibilityProvider>(
+                          Consumer<VisibilityProvider>( // Şifrə görünürlüğünü idarə etmək üçün
                             builder: (context, visibilityProvider, child) {
                               return AppTextField(
                                 hintText: AppTexts.enterPassword,
                                 controller: _passwordController,
-                                obscureText:
-                                    visibilityProvider.isObscuredPassword,
+                                obscureText: visibilityProvider.isObscuredPassword,
                                 prefixIcon: Icons.lock_outline,
-                                onPressed:
-                                    visibilityProvider.togglePasswordVisibility,
+                                onPressed: visibilityProvider.togglePasswordVisibility, // Şifrə görünürlüğünü dəyişmək
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return AppTexts.emptyPassword;
+                                    return AppTexts.emptyPassword; // Boş şifrə yoxlanışı
                                   } else if (value.length < 6) {
-                                    return 'Şifrə ən azı 6 simvol olmalıdır';
+                                    return 'Şifrə ən azı 6 simvol olmalıdır'; // Minimum uzunluq yoxlanışı
                                   }
                                   return null;
                                 },
@@ -145,21 +146,19 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          Consumer<VisibilityProvider>(
+                          Consumer<VisibilityProvider>( // Şifrə təsdiqi görünürlüğünü idarə etmək üçün
                             builder: (context, visibilityProvider, child) {
                               return AppTextField(
                                 hintText: AppTexts.confirmPassword,
                                 controller: _confirmPasswordController,
-                                obscureText: visibilityProvider
-                                    .isObscuredConfirmPassword,
+                                obscureText: visibilityProvider.isObscuredConfirmPassword,
                                 prefixIcon: Icons.lock_outline,
-                                onPressed: visibilityProvider
-                                    .toggleConfirmPasswordVisibility,
+                                onPressed: visibilityProvider.toggleConfirmPasswordVisibility, // Təsdiq şifrəsinin görünürlüğünü dəyişmək
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return AppTexts.emptyPassword;
+                                    return AppTexts.emptyPassword; // Boş şifrə yoxlanışı
                                   } else if (value.length < 6) {
-                                    return 'Şifrə ən azı 6 simvol olmalıdır';
+                                    return 'Şifrə ən azı 6 simvol olmalıdır'; // Minimum uzunluq yoxlanışı
                                   }
                                   return null;
                                 },
@@ -173,17 +172,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         text: AppTexts.signUp,
                         color: AppColors.lightNavy,
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate()) { // Forma doğrulama
                             final email = _emailController.text.trim();
                             final password = _passwordController.text.trim();
-                            final confirmPassword =
-                                _confirmPasswordController.text.trim();
+                            final confirmPassword = _confirmPasswordController.text.trim();
                             if (password != confirmPassword) {
-                              AppSnackBar.show(context, AppTexts.samePassword);
+                              AppSnackBar.show(context, AppTexts.samePassword); // Şifrələr eyni deyilsə xəbərdarlıq
                             } else {
                               context
                                   .read<RegisterBloc>()
-                                  .add(RegisterButtonPressed(email, password));
+                                  .add(RegisterButtonPressed(email, password)); // Qeydiyyat tıklanması
                             }
                           }
                         },
@@ -192,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       RegisterTextDetector(
                         text: AppTexts.alreadyMember,
                         onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.login.path);
+                          Navigator.pushNamed(context, AppRoutes.login.path); // Giriş səhifəsinə keçid
                         },
                         loginText: AppTexts.logIn,
                       )

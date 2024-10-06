@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task/core/constants/app_colors.dart';
 
+// App üçün xüsusi ElevatedButton widgetı
 class AppElevatedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -16,14 +17,15 @@ class AppElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: 50,
+      width: double.infinity, // button eni tam ekran boyunca
+      height: 50, // button hündürlüyü
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: color,
+          backgroundColor: color, // button fon rəngi
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius:
+                BorderRadius.circular(12), // button borderinin radiusu forması
           ),
         ),
         child: Text(

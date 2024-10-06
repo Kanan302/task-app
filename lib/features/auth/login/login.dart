@@ -24,37 +24,37 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); // Form üçün açar
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height; 
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Center(
-              child: BlocListener<LoginBloc, LoginState>(
+              child: BlocListener<LoginBloc, LoginState>( // Bloc dinləyici
                 listener: (context, state) {
                   if (state is LoginLoading) {
-                    CircularProgressIndicator;
+                    CircularProgressIndicator; // Yüklənmə göstəricisi
                   } else if (state is LoginSuccess) {
                     AppSnackBar.show(context, AppTexts.loginSuccessful,
                         backgroundColor: AppColors.black);
                     Navigator.pushReplacementNamed(
-                        context, AppRoutes.navbar.path);
+                        context, AppRoutes.navbar.path); // Giriş uğurlu olduqda yönləndirmə
                   } else if (state is LoginFailure) {
-                    AppSnackBar.show(context, "Giriş Uğursuz: ${state.error}");
+                    AppSnackBar.show(context, "Giriş Uğursuz: ${state.error}"); // Giriş uğursuz olduqda xəbərdarlıq
                   }
                 },
                 child: Form(
-                  key: _formKey,
+                  key: _formKey, // Formun açarı
                   child: Column(
                     children: [
-                      SizedBox(height: screenHeight * 0.06),
+                      SizedBox(height: screenHeight * 0.06), // Yuxarı boşluq
                       SvgPicture.asset(
-                        'assets/images/login_register_logo.svg',
+                        'assets/images/login_register_logo.svg', // Logo
                         width: 200,
                         height: 200,
                       ),
@@ -85,9 +85,9 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: null,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return AppTexts.emptyEmail;
+                                return AppTexts.emptyEmail; // Boş email yoxlaması
                               } else if (!value.endsWith('@gmail.com')) {
-                                return AppTexts.finisPassword;
+                                return AppTexts.finisPassword; // Email sonu yoxlaması
                               }
                               return null;
                             },
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          Consumer<VisibilityProvider>(
+                          Consumer<VisibilityProvider>( // Şifrəni gizlətmək/göstərmək üçün
                             builder: (context, visibilityProvider, child) {
                               return AppTextField(
                                 hintText: AppTexts.enterPassword,
@@ -118,9 +118,9 @@ class _LoginPageState extends State<LoginPage> {
                                     visibilityProvider.togglePasswordVisibility,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return AppTexts.emptyPassword;
+                                    return AppTexts.emptyPassword; 
                                   } else if (value.length < 6) {
-                                    return AppTexts.minPassword;
+                                    return AppTexts.minPassword; 
                                   }
                                   return null;
                                 },
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             text: AppTexts.forgotPassword,
                             onPressed: () {
                               Navigator.pushNamed(
-                                  context, AppRoutes.reset.path);
+                                  context, AppRoutes.reset.path); // Şifrəni unutduqda yönləndirmə
                             },
                             color: AppColors.lightNavy,
                           )
@@ -149,13 +149,13 @@ class _LoginPageState extends State<LoginPage> {
                         text: AppTexts.lOGIN,
                         color: AppColors.lightNavy,
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate()) { // Formun doğruluğunu yoxla
                             final email = _emailController.text.trim();
                             final password = _passwordController.text.trim();
 
                             context
                                 .read<LoginBloc>()
-                                .add(LoginButtonPressed(email, password));
+                                .add(LoginButtonPressed(email, password)); // Giriş düyməsi basıldıqda
                           }
                         },
                       ),
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                       LoginTextDetector(
                         text: AppTexts.newMember,
                         onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.register.path);
+                          Navigator.pushNamed(context, AppRoutes.register.path); 
                         },
                         registerText: AppTexts.registerNow,
                       ),
@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
+    _emailController.dispose(); 
+    _passwordController.dispose(); 
   }
 }

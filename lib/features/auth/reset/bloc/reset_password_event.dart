@@ -7,8 +7,9 @@ sealed class ResetPasswordEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// Şifrənin sıfırlanması üçün tələb olunan hadisə
 class ResetPasswordRequested extends ResetPasswordEvent {
-  final String email;
+  final String email; // İstifadəçinin daxil etdiyi email ünvanı
 
   const ResetPasswordRequested(this.email);
 

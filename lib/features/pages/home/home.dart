@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget {
           SearchField(
             text: AppTexts.search,
             onChanged: (query) {
+              // Axtarış nəticələrini filtrləmək üçün UserCubit-dən istifadə
               context.read<UserCubit>().filterUsers(query);
             },
           ),
@@ -47,6 +48,7 @@ class HomePage extends StatelessWidget {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      // Sortable başlıqlar
                       buildSortableHeader(
                         AppTexts.firstName,
                         flex: 2,
@@ -83,11 +85,11 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: BlocBuilder<UserCubit, List<dynamic>>(
               builder: (context, users) {
+                // İstifadəçilər boşdursa, yüklənmə göstəricisi
                 if (users.isEmpty) {
-                  return const Center(
-                    child: CircularProgressIndicator()
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 }
+                // İstifadəçilərin siyahısını göstər
                 return ListView.builder(
                   itemCount: users.length,
                   itemBuilder: (context, index) {
@@ -96,6 +98,7 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Row(
                         children: [
+                          // İstifadəçi məlumatlarını göstər
                           buildItemText(user['name'], flex: 2),
                           buildItemText(user['surname'], flex: 2),
                           buildItemText(user['email'], flex: 3),

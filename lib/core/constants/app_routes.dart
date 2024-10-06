@@ -1,3 +1,4 @@
+// App-də istifadə olunan routes
 enum AppRoutes {
   splash(path: '/splash'),
   login(path: '/login'),

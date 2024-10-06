@@ -10,8 +10,10 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // NavigationProvider-in nümunəsini alır
     final navigationProvider = Provider.of<NavigationProvider>(context);
 
+    // Səhifələr siyahısı
     final List<Widget> pages = [
       const HomePage(),
       const ProfilePage(),
@@ -20,7 +22,7 @@ class NavBar extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child:
-            pages[navigationProvider.selectedIndex], // Aktiv səhifəni göstərin
+            pages[navigationProvider.selectedIndex], // Seçilmiş səhifəni göstər
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -33,10 +35,9 @@ class NavBar extends StatelessWidget {
             label: AppTexts.profile,
           ),
         ],
-        currentIndex:
-            navigationProvider.selectedIndex, // Aktiv indeksi göstərin
-        onTap: (index) => navigationProvider
-            .setIndex(index), // Provider-ə yeni indeksi göndərin
+        currentIndex: navigationProvider.selectedIndex, // Aktiv səhifəni göstər
+        onTap: (index) =>
+            navigationProvider.setIndex(index), // Yeni səhifə seçimi
       ),
     );
   }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+// App-də istifadə olunan xüsusi TextButton widgetı
 class AppTextButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final Color color;
+
   const AppTextButton({
     super.key,
     required this.text,
@@ -14,11 +16,11 @@ class AppTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: onPressed, // düymə basıldıqda yerinə yetiriləcək funksiya
       child: Text(
         text,
         style: TextStyle(
-          color: color,
+          color: color, // mətn rəngi
         ),
       ),
     );

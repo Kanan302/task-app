@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:task/core/constants/app_colors.dart';
 
+// App-də istifadə olunan xüsusi mətn sahəsi (TextField) widgetı
 class AppTextField extends StatelessWidget {
-  final String hintText;
-  final TextEditingController controller;
-  final bool obscureText;
-  final IconData prefixIcon;
-  final VoidCallback? onPressed;
-  final String? Function(String?)? validator;
+  final String hintText; // Mətn sahəsində görünən köməkçi mətn
+  final TextEditingController controller; // Mətn sahəsinin idarəedici obyekti
+  final bool obscureText; // Mətnin gizlədilməsini idarə edir (şifrə sahəsi üçün)
+  final IconData prefixIcon; // Mətn sahəsinin başındakı ikon
+  final VoidCallback? onPressed; // İkon düyməsi basıldıqda yerinə yetiriləcək funksiya
+  final String? Function(String?)? validator; // Daxil edilən mətni yoxlayan funksiya
 
   const AppTextField({
     super.key,
@@ -22,7 +23,7 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.emailAddress, 
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(
@@ -31,36 +32,36 @@ class AppTextField extends StatelessWidget {
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.only(left: 15, right: 10),
-          child: Icon(prefixIcon),
+          child: Icon(prefixIcon), 
         ),
         suffixIcon: onPressed != null
             ? Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: IconButton(
                   icon: Icon(
-                    obscureText ? Icons.visibility_off : Icons.visibility,
+                    obscureText ? Icons.visibility_off : Icons.visibility, // Gizli mətni göstərmək/diskret etmək üçün ikon
                   ),
-                  onPressed: onPressed,
+                  onPressed: onPressed, 
                 ),
               )
             : null,
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: AppColors.black), 
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade700),
+          borderSide: BorderSide(color: AppColors.grey700), 
         ),
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: AppColors.black),
         ),
         focusedErrorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: AppColors.black), 
         ),
       ),
-      obscureText: obscureText,
-      controller: controller,
-      obscuringCharacter: obscureText ? '•' : ' ',
-      validator: validator,
+      obscureText: obscureText, // Mətnin gizlədilməsi
+      controller: controller, 
+      obscuringCharacter: obscureText ? '•' : ' ', // Gizli mətndəki simvol
+      validator: validator, // Mətnin doğruluğunu yoxlayan funksiya
     );
   }
 }

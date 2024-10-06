@@ -7,15 +7,16 @@ class RegisterDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text(AppTexts.congrats),
-      content: const Text(AppTexts.createdAccount),
+    return AlertDialog( // Dialoq pəncərəsi
+      title: const Text(AppTexts.congrats), // Dialoq başlığı
+      content: const Text(AppTexts.createdAccount), // Dialoq məzmunu
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, AppRoutes.navbar.path);
+            // İstifadəçi buttona basdıqda
+            Navigator.pushReplacementNamed(context, AppRoutes.navbar.path); // Navbar səhifəsinə keçid
           },
-          child: const Text(AppTexts.close),
+          child: const Text(AppTexts.close), 
         ),
       ],
     );

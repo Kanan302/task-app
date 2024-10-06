@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Axtarış fieldi
 class SearchField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final String text;

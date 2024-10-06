@@ -15,13 +15,13 @@ class ProfilePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text(AppTexts.profile),
           backgroundColor: Colors.transparent,
-          elevation: 0,
+          elevation: 0, // Kölgə olmaması üçün
           actions: [
             Consumer<ProfileProvider>(
               builder: (context, provider, child) {
                 return IconButton(
                   icon: const Icon(Icons.logout, color: AppColors.black),
-                  onPressed: () => provider.logout(context),
+                  onPressed: () => provider.logout(context), // Çıxış əmri
                 );
               },
             ),
@@ -34,24 +34,28 @@ class ProfilePage extends StatelessWidget {
               child: Consumer<ProfileProvider>(
                 builder: (context, provider, child) {
                   if (provider.isLoading) {
+                    // Yüklənmə zamanı göstərin
                     return const CircularProgressIndicator();
                   }
 
                   return Column(
                     children: [
                       GestureDetector(
-                        onTap: provider.pickImage,
+                        onTap: provider
+                            .pickImage, // Şəkil seçmə funksiyasını çağır
                         child: CircleAvatar(
                           radius: 50,
                           backgroundImage: provider.imageBytes == null
                               ? null
-                              : MemoryImage(provider.imageBytes!),
+                              : MemoryImage(
+                                  provider.imageBytes!), // Şəkili byte-dan çək
                           child: provider.imageBytes == null
                               ? const Icon(Icons.person, size: 50)
                               : null,
                         ),
                       ),
                       const SizedBox(height: 16),
+                      // Ad
                       TextField(
                         controller: provider.firstNameController,
                         decoration: const InputDecoration(
@@ -60,6 +64,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
+                      // Soyad
                       TextField(
                         controller: provider.lastNameController,
                         decoration: const InputDecoration(
@@ -68,6 +73,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
+                      // Yaş
                       TextField(
                         controller: provider.ageController,
                         decoration: const InputDecoration(
@@ -76,6 +82,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
+                      // Ünvan
                       TextField(
                         controller: provider.addressController,
                         decoration: const InputDecoration(
@@ -88,7 +95,7 @@ class ProfilePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
-                            onPressed: () => provider.deleteProfile(context),
+                            onPressed: () => provider.deleteProfile(context), // Profil silmə əmri
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.lightNavy,
                               foregroundColor: AppColors.white,
@@ -96,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                             child: const Text(AppTexts.delete),
                           ),
                           ElevatedButton(
-                            onPressed: () => provider.saveProfile(context),
+                            onPressed: () => provider.saveProfile(context), // Profil saxlama əmri
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.lightNavy,
                               foregroundColor: AppColors.white,

@@ -19,6 +19,7 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     super.initState();
 
+    // Animasiya idarəedici və keçid animasiyasının qurulması
     _controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -34,6 +35,7 @@ class _SplashPageState extends State<SplashPage>
 
     _controller.forward();
 
+    // 4 saniyədən sonra giriş səhifəsinə yönləndir
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
         Navigator.pushReplacementNamed(context, AppRoutes.login.path);
@@ -50,7 +52,7 @@ class _SplashPageState extends State<SplashPage>
           children: [
             Center(
               child: SlideTransition(
-                position: _offsetAnimation,
+                position: _offsetAnimation, // Animasiya tətbiq olunur
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -93,6 +95,7 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   void dispose() {
+    // Animasiya idarəedicisini təmizləyir
     _controller.dispose();
     super.dispose();
   }
