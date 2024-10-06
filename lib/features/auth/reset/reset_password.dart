@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:task/core/widgets/app_button.dart';
+import 'package:task/core/constants/app_colors.dart';
+import 'package:task/core/widgets/app_elevated_button.dart';
 import 'package:task/core/widgets/app_snack_bar.dart';
 import 'package:task/core/widgets/app_text_field.dart';
 import 'package:task/features/auth/reset/bloc/reset_password_bloc.dart';
@@ -88,6 +89,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       const SizedBox(height: 20),
                       AppElevatedButton(
                         text: 'Reset',
+                        color: AppColors.lightNavy,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             final email = _emailController.text.trim();

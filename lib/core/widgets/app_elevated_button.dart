@@ -4,10 +4,13 @@ import 'package:task/core/constants/app_colors.dart';
 class AppElevatedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color color;
+
   const AppElevatedButton({
     super.key,
     required this.text,
     required this.onPressed,
+    required this.color,
   });
 
   @override
@@ -18,7 +21,7 @@ class AppElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.lightNavy,
+          backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

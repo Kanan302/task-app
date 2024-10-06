@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:task/core/constants/app_colors.dart';
 import 'package:task/core/constants/app_routes.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,8 +16,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String firstName = '';
   String lastName = '';
-  String age = ''; // Age field
-  String address = ''; // Ünvan field
+  String age = '';
+  String address = '';
   String? base64Image; // Base64 formatında şəkil
   File? _image;
 
@@ -56,94 +56,99 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _logout() async {
     await FirebaseAuth.instance.signOut();
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacementNamed(context, AppRoutes.login.path);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: _pickImage,
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: _image == null ? null : FileImage(_image!),
-                child: _image == null
-                    ? const Icon(Icons.camera_alt, size: 50)
-                    : null,
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout, color: AppColors.black),
+            onPressed: _logout,
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: _pickImage,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: _image == null ? null : FileImage(_image!),
+                    child: _image == null
+                        ? const Icon(Icons.person, size: 50)
+                        : null,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  onChanged: (value) => setState(() {
+                    firstName = value;
+                  }),
+                  decoration: const InputDecoration(
+                    labelText: 'Ad',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  onChanged: (value) => setState(() {
+                    lastName = value;
+                  }),
+                  decoration: const InputDecoration(
+                    labelText: 'Soyad',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  onChanged: (value) => setState(() {
+                    age = value;
+                  }),
+                  decoration: const InputDecoration(
+                    labelText: 'Yaş',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  onChanged: (value) => setState(() {
+                    address = value;
+                  }),
+                  decoration: const InputDecoration(
+                    labelText: 'Ünvan',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    // UserProfile userProfile = UserProfile(
+                    //   firstName: firstName,
+                    //   lastName: lastName,
+                    //   age: age,
+                    //   address: address,
+                    //   imageBase64: base64Image ?? '', // Base64 şəkli userProfile-də saxla
+                    // );
+                    // saveProfile(userProfile);
+                  },
+                  child: const Text('Saxla'),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            TextField(
-              onChanged: (value) => setState(() {
-                firstName = value;
-              }),
-              decoration: const InputDecoration(labelText: 'Ad'),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              onChanged: (value) => setState(() {
-                lastName = value;
-              }),
-              decoration: const InputDecoration(labelText: 'Soyad'),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              onChanged: (value) => setState(() {
-                age = value;
-              }),
-              decoration: const InputDecoration(labelText: 'Yaş'),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              onChanged: (value) => setState(() {
-                address = value;
-              }),
-              decoration: const InputDecoration(labelText: 'Ünvan'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // UserProfile userProfile = UserProfile(
-                //   firstName: firstName,
-                //   lastName: lastName,
-                //   age: age,
-                //   address: address,
-                //   imageBase64: base64Image ?? '', // Base64 şəkli userProfile-də saxla
-                // );
-                // saveProfile(userProfile);
-              },
-              child: const Text('Saxla'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _logout,
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: const Text('Çıxış'),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
-}
-
-class UserProfile {
-  String firstName;
-  String lastName;
-  String age;
-  String address;
-  String imageBase64; // Base64 formatında şəkil
-
-  UserProfile({
-    required this.firstName,
-    required this.lastName,
-    required this.age,
-    required this.address,
-    required this.imageBase64,
-  });
 }

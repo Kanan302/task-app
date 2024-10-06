@@ -146,6 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 15),
                       AppElevatedButton(
                         text: 'LOG IN',
+                        color: AppColors.lightNavy,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             final email = _emailController.text.trim();

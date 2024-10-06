@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
           // Cədvəl başlıqları
           Container(
             decoration: const BoxDecoration(
-              color: AppColors.blue,
+              color: AppColors.lightNavy,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       buildSortableHeader(
                         'Name',
-                        flex: 1,
+                        flex: 2,
                         sortState: sortState,
                         context: context,
                       ),
