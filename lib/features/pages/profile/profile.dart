@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task/core/constants/app_colors.dart';
+import 'package:task/core/constants/app_texts.dart';
 import 'package:task/features/pages/profile/services/profile_provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -12,7 +13,7 @@ class ProfilePage extends StatelessWidget {
       create: (_) => ProfileProvider(context),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: const Text(AppTexts.profile),
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
@@ -32,6 +33,10 @@ class ProfilePage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Consumer<ProfileProvider>(
                 builder: (context, provider, child) {
+                  if (provider.isLoading) {
+                    return const CircularProgressIndicator();
+                  }
+
                   return Column(
                     children: [
                       GestureDetector(
@@ -50,7 +55,7 @@ class ProfilePage extends StatelessWidget {
                       TextField(
                         controller: provider.firstNameController,
                         decoration: const InputDecoration(
-                          labelText: 'First Name',
+                          labelText: AppTexts.firstName,
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -58,7 +63,7 @@ class ProfilePage extends StatelessWidget {
                       TextField(
                         controller: provider.lastNameController,
                         decoration: const InputDecoration(
-                          labelText: 'Last Name',
+                          labelText: AppTexts.lastName,
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -66,7 +71,7 @@ class ProfilePage extends StatelessWidget {
                       TextField(
                         controller: provider.ageController,
                         decoration: const InputDecoration(
-                          labelText: 'Age',
+                          labelText: AppTexts.age,
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -74,7 +79,7 @@ class ProfilePage extends StatelessWidget {
                       TextField(
                         controller: provider.addressController,
                         decoration: const InputDecoration(
-                          labelText: 'Address',
+                          labelText: AppTexts.address,
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -83,22 +88,20 @@ class ProfilePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
-                            onPressed: () => provider
-                                .deleteProfile(context), // Pass context here
+                            onPressed: () => provider.deleteProfile(context),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.lightNavy,
                               foregroundColor: AppColors.white,
                             ),
-                            child: const Text('Delete'),
+                            child: const Text(AppTexts.delete),
                           ),
                           ElevatedButton(
-                            onPressed: () => provider
-                                .saveProfile(context), // Pass context here
+                            onPressed: () => provider.saveProfile(context),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.lightNavy,
                               foregroundColor: AppColors.white,
                             ),
-                            child: const Text('Save'),
+                            child: const Text(AppTexts.save),
                           ),
                         ],
                       ),

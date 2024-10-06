@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:task/core/constants/app_colors.dart';
+import 'package:task/core/constants/app_texts.dart';
 import 'package:task/core/widgets/app_elevated_button.dart';
 import 'package:task/features/auth/register/bloc/register_bloc.dart';
 import 'package:task/core/constants/app_routes.dart';
@@ -62,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 180,
                       ),
                       const Text(
-                        'Welcome! Create a new account.',
+                        AppTexts.createAccount,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -73,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Email',
+                            AppTexts.email,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -81,14 +82,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           const SizedBox(height: 5),
                           AppTextField(
-                            hintText: 'Enter your email',
+                            hintText: AppTexts.enterEmail,
                             controller: _emailController,
                             obscureText: false,
                             prefixIcon: Icons.email_outlined,
                             onPressed: null,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Email boş ola bilməz';
+                                return AppTexts.emptyEmail;
                               } else if (!value.endsWith('@gmail.com')) {
                                 return 'Email @gmail.com ilə bitməlidir';
                               }
@@ -102,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Password',
+                            AppTexts.password,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -112,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Consumer<VisibilityProvider>(
                             builder: (context, visibilityProvider, child) {
                               return AppTextField(
-                                hintText: 'Enter your password',
+                                hintText: AppTexts.enterPassword,
                                 controller: _passwordController,
                                 obscureText:
                                     visibilityProvider.isObscuredPassword,
@@ -121,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     visibilityProvider.togglePasswordVisibility,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Şifrə boş ola bilməz';
+                                    return AppTexts.emptyPassword;
                                   } else if (value.length < 6) {
                                     return 'Şifrə ən azı 6 simvol olmalıdır';
                                   }
@@ -137,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Confirm',
+                            AppTexts.confirm,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -147,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Consumer<VisibilityProvider>(
                             builder: (context, visibilityProvider, child) {
                               return AppTextField(
-                                hintText: 'Confirm your password',
+                                hintText: AppTexts.confirmPassword,
                                 controller: _confirmPasswordController,
                                 obscureText: visibilityProvider
                                     .isObscuredConfirmPassword,
@@ -156,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     .toggleConfirmPasswordVisibility,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Şifrə boş ola bilməz';
+                                    return AppTexts.emptyPassword;
                                   } else if (value.length < 6) {
                                     return 'Şifrə ən azı 6 simvol olmalıdır';
                                   }
@@ -169,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 20),
                       AppElevatedButton(
-                        text: 'SIGN UP',
+                        text: AppTexts.signUp,
                         color: AppColors.lightNavy,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -178,8 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             final confirmPassword =
                                 _confirmPasswordController.text.trim();
                             if (password != confirmPassword) {
-                              AppSnackBar.show(
-                                  context, "Şifrələr eyni olmalıdır.");
+                              AppSnackBar.show(context, AppTexts.samePassword);
                             } else {
                               context
                                   .read<RegisterBloc>()
@@ -190,11 +190,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 5),
                       RegisterTextDetector(
-                          text: 'Already a member? ',
-                          onTap: () {
-                            Navigator.pushNamed(context, AppRoutes.login.path);
-                          },
-                          loginText: 'Log In')
+                        text: AppTexts.alreadyMember,
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.login.path);
+                        },
+                        loginText: AppTexts.logIn,
+                      )
                     ],
                   ),
                 ),

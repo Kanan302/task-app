@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:task/core/constants/app_texts.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -20,14 +21,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginSuccess(userCredential));
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          emit(const LoginFailure('İstifadəçi tapılmadı'));
+          emit(const LoginFailure(AppTexts.notFoundUser));
         } else if (e.code == 'wrong-password') {
-          emit(const LoginFailure('Yanlış şifrə'));
+          emit(const LoginFailure(AppTexts.wrongPassword));
         } else {
           emit(LoginFailure('Giriş Uğursuz: ${e.message}'));
         }
       } catch (e) {
-        emit(const LoginFailure('Gözlənilməz bir xəta baş verdi'));
+        emit(const LoginFailure(AppTexts.unexpectedError));
       }
     });
   }

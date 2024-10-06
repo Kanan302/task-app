@@ -16,6 +16,7 @@ class ProfileProvider extends ChangeNotifier {
   String? base64Image;
   Uint8List? imageBytes;
   String? profileDocId;
+  bool isLoading = true; // Track loading state
 
   final ImagePicker _picker = ImagePicker();
 
@@ -24,8 +25,11 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   Future<void> _fetchProfile(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+
     await fetchProfileHelper(
-      context: context, 
+      context: context,
       firstNameController: firstNameController,
       lastNameController: lastNameController,
       ageController: ageController,
@@ -42,6 +46,8 @@ class ProfileProvider extends ChangeNotifier {
         notifyListeners();
       },
     );
+    isLoading = false;
+    notifyListeners();
   }
 
   Future<void> pickImage() async {

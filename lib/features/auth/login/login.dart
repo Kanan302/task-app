@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:task/core/constants/app_texts.dart';
 import 'package:task/features/auth/login/bloc/login_bloc.dart';
 import 'package:task/core/constants/app_colors.dart';
 import 'package:task/core/constants/app_routes.dart';
@@ -39,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                   if (state is LoginLoading) {
                     CircularProgressIndicator;
                   } else if (state is LoginSuccess) {
-                    AppSnackBar.show(context, "Login Successful!",
+                    AppSnackBar.show(context, AppTexts.loginSuccessful,
                         backgroundColor: AppColors.black);
                     Navigator.pushReplacementNamed(
                         context, AppRoutes.navbar.path);
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 200,
                       ),
                       const Text(
-                        'Welcome back! Glad to see you, Again!',
+                        AppTexts.welcomeBack,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Email',
+                            AppTexts.email,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -77,16 +78,16 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 5),
                           AppTextField(
-                            hintText: 'Enter your email',
+                            hintText: AppTexts.enterEmail,
                             controller: _emailController,
                             obscureText: false,
                             prefixIcon: Icons.email_outlined,
                             onPressed: null,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Email boş ola bilməz';
+                                return AppTexts.emptyEmail;
                               } else if (!value.endsWith('@gmail.com')) {
-                                return 'Email @gmail.com ilə bitməlidir';
+                                return AppTexts.finisPassword;
                               }
                               return null;
                             },
@@ -98,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Password',
+                            AppTexts.password,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                           Consumer<VisibilityProvider>(
                             builder: (context, visibilityProvider, child) {
                               return AppTextField(
-                                hintText: 'Enter your password',
+                                hintText: AppTexts.enterPassword,
                                 controller: _passwordController,
                                 obscureText:
                                     visibilityProvider.isObscuredPassword,
@@ -117,9 +118,9 @@ class _LoginPageState extends State<LoginPage> {
                                     visibilityProvider.togglePasswordVisibility,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Şifrə boş ola bilməz';
+                                    return AppTexts.emptyPassword;
                                   } else if (value.length < 6) {
-                                    return 'Şifrə ən azı 6 simvol olmalıdır';
+                                    return AppTexts.minPassword;
                                   }
                                   return null;
                                 },
@@ -132,9 +133,9 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const LoginCheckboxText(text: 'Remember me'),
+                          const LoginCheckboxText(text: AppTexts.rememberMe),
                           AppTextButton(
-                            text: 'Forgot password?',
+                            text: AppTexts.forgotPassword,
                             onPressed: () {
                               Navigator.pushNamed(
                                   context, AppRoutes.reset.path);
@@ -145,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 15),
                       AppElevatedButton(
-                        text: 'LOG IN',
+                        text: AppTexts.lOGIN,
                         color: AppColors.lightNavy,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -160,11 +161,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 5),
                       LoginTextDetector(
-                        text: 'New Member? ',
+                        text: AppTexts.newMember,
                         onTap: () {
                           Navigator.pushNamed(context, AppRoutes.register.path);
                         },
-                        registerText: 'Register now',
+                        registerText: AppTexts.registerNow,
                       ),
                     ],
                   ),

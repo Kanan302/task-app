@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task/core/constants/app_texts.dart';
 import 'package:task/features/pages/home/home.dart';
 import 'package:task/services/provider/navigation_provider.dart';
 import 'profile/profile.dart';
@@ -25,11 +26,11 @@ class NavBar extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: AppTexts.home,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: AppTexts.profile,
           ),
         ],
         currentIndex:

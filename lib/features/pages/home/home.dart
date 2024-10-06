@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/core/constants/app_colors.dart';
+import 'package:task/core/constants/app_texts.dart';
 import 'package:task/features/pages/home/widgets/home_search_field.dart';
 import 'package:task/features/pages/home/widgets/home_text.dart';
 import 'package:task/services/cubit/user_cubit.dart';
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
 
           // Axtarış fieldi
           SearchField(
-            text: 'Search',
+            text: AppTexts.search,
             onChanged: (query) {
               context.read<UserCubit>().filterUsers(query);
             },
@@ -47,25 +48,25 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       buildSortableHeader(
-                        'Name',
+                        AppTexts.firstName,
                         flex: 2,
                         sortState: sortState,
                         context: context,
                       ),
                       buildSortableHeader(
-                        'Surname',
+                        AppTexts.lastName,
                         flex: 2,
                         sortState: sortState,
                         context: context,
                       ),
                       buildSortableHeader(
-                        'Email',
+                        AppTexts.email,
                         flex: 2,
                         sortState: sortState,
                         context: context,
                       ),
                       buildSortableHeader(
-                        'Date',
+                        AppTexts.date,
                         flex: 2,
                         sortState: sortState,
                         context: context,
@@ -84,7 +85,7 @@ class HomePage extends StatelessWidget {
               builder: (context, users) {
                 if (users.isEmpty) {
                   return const Center(
-                    child: Text('No users found'),
+                    child: CircularProgressIndicator()
                   );
                 }
                 return ListView.builder(

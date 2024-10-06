@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:task/core/constants/app_texts.dart';
 import 'package:task/core/helpers/snackbar_helper.dart';
 import 'package:task/features/pages/profile/model/user_model.dart';
 
@@ -38,7 +39,7 @@ Future<void> fetchProfileHelper({
       }
     }
   } catch (e) {
-    SnackbarHelper.showSnackbar(context, 'Profile information not found!');
+    SnackbarHelper.showSnackbar(context, AppTexts.notFoundProfile);
   }
 }
 
@@ -75,9 +76,9 @@ Future<void> saveProfileHelper({
       'user_id': FirebaseAuth.instance.currentUser!.uid,
     }, SetOptions(merge: true));
 
-    SnackbarHelper.showSnackbar(context, 'Profile saved!');
+    SnackbarHelper.showSnackbar(context, AppTexts.savedProfile);
   } else {
-    SnackbarHelper.showSnackbar(context, 'Image has not loaded');
+    SnackbarHelper.showSnackbar(context, AppTexts.notLoadedImage);
   }
 }
 
@@ -91,7 +92,7 @@ Future<void> deleteProfileHelper({
         .collection('profiles')
         .doc(profileDocId)
         .delete();
-    SnackbarHelper.showSnackbar(context, 'Profile deleted!');
+    SnackbarHelper.showSnackbar(context, AppTexts.deletedProfile);
     onLogout();
   }
 }

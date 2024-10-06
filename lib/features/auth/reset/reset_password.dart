@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:task/core/constants/app_colors.dart';
+import 'package:task/core/constants/app_texts.dart';
 import 'package:task/core/widgets/app_elevated_button.dart';
 import 'package:task/core/widgets/app_snack_bar.dart';
 import 'package:task/core/widgets/app_text_field.dart';
@@ -27,7 +28,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           onPressed: Navigator.of(context).pop,
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text('Reset Your Password'),
+        title:  const Text(AppTexts.resetYourPassword),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -40,11 +41,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     const CircularProgressIndicator();
                   } else if (state is ResetPasswordSuccess) {
                     AppSnackBar.show(
-                        context, "Şifrə yeniləmə linki emailinizə göndərildi.",
+                        context, AppTexts.sendedLink,
                         backgroundColor: Colors.black);
                   } else if (state is ResetPasswordFailure) {
                     AppSnackBar.show(
-                        context, "Yeniləmə Uğursuz: ${state.error}");
+                        context, 'Yeniləmə Uğursuz: ${state.error}');
                   }
                 },
                 child: Form(
@@ -62,7 +63,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Email',
+                            AppTexts.email,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -70,16 +71,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           ),
                           const SizedBox(height: 5),
                           AppTextField(
-                            hintText: 'Enter your email',
+                            hintText: AppTexts.enterEmail,
                             controller: _emailController,
                             obscureText: false,
                             prefixIcon: Icons.email_outlined,
                             onPressed: null,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Email boş ola bilməz';
+                                return AppTexts.emptyEmail;
                               } else if (!value.contains('@')) {
-                                return 'Düzgün email daxil edin';
+                                return AppTexts.correctEmail;
                               }
                               return null;
                             },
@@ -88,7 +89,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       ),
                       const SizedBox(height: 20),
                       AppElevatedButton(
-                        text: 'Reset',
+                        text: AppTexts.reset,
                         color: AppColors.lightNavy,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
