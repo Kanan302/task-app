@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                   if (state is LoginLoading) {
                     CircularProgressIndicator;
                   } else if (state is LoginSuccess) {
-                    AppSnackBar.show(context, "Giriş Müvəffəqiyyətli!",
+                    AppSnackBar.show(context, "Login Successful!",
                         backgroundColor: AppColors.black);
                     Navigator.pushReplacementNamed(
                         context, AppRoutes.navbar.path);

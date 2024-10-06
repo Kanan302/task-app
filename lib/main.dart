@@ -10,6 +10,7 @@ import 'package:task/features/auth/login/login.dart';
 import 'package:task/features/auth/register/register.dart';
 import 'package:task/features/auth/reset/bloc/reset_password_bloc.dart';
 import 'package:task/features/auth/reset/reset_password.dart';
+import 'package:task/features/pages/profile/services/profile_provider.dart';
 import 'package:task/features/pages/splash/splash.dart';
 import 'package:task/features/pages/nav_bar.dart';
 import 'package:task/firebase_options.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => NavigationProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => ProfileProvider(context),
+        ),
         BlocProvider(
           create: (context) => LoginBloc(),
         ),
@@ -57,7 +61,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Task App',
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.navbar.path,
+        initialRoute: AppRoutes.splash.path,
         routes: {
           AppRoutes.splash.path: (context) => const SplashPage(),
           AppRoutes.login.path: (context) => const LoginPage(),
