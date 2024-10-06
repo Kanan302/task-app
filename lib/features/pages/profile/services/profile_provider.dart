@@ -16,13 +16,21 @@ class ProfileProvider extends ChangeNotifier {
   String? base64Image; // Şəklin base64 formatında saxlanması
   Uint8List? imageBytes; // Şəkinin byte formatında saxlanması
   String? profileDocId; // Firestore-da profil sənədinin ID-si
-  bool isLoading = true; 
+  bool isLoading = true;
+
+  bool _editMode = false;
+  bool get editMode => _editMode;
 
   final ImagePicker _picker = ImagePicker();
 
   // Constructor, profil məlumatlarını yükləmək üçün çağırılır
   ProfileProvider(BuildContext context) {
     _fetchProfile(context); // Profil məlumatlarını yükləyir
+  }
+
+  void toggleEditMode() {
+    _editMode = !_editMode;
+    notifyListeners();
   }
 
   // Profil məlumatlarını yükləmək üçün helper funksiyası
@@ -40,7 +48,8 @@ class ProfileProvider extends ChangeNotifier {
       onImageFetched: (String? imageBase64) {
         if (imageBase64 != null) {
           base64Image = imageBase64; // Şəklin base64 formatını saxla
-          imageBytes = base64Decode(base64Image!); // Base64-dan byte formatına çevir
+          imageBytes =
+              base64Decode(base64Image!); // Base64-dan byte formatına çevir
         }
         notifyListeners();
       },
@@ -99,7 +108,8 @@ class ProfileProvider extends ChangeNotifier {
   // İstifadəçini çıxış etdirmək üçün metod
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut(); // Firebase-dən çıxış et
-    Navigator.pushReplacementNamed(context, AppRoutes.login.path); // Login səhifəsinə yönləndir
+    Navigator.pushReplacementNamed(
+        context, AppRoutes.login.path); // Login səhifəsinə yönləndir
   }
 
   @override

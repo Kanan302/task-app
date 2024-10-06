@@ -85,9 +85,16 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: BlocBuilder<UserCubit, List<dynamic>>(
               builder: (context, users) {
+                final userCubit = context.read<UserCubit>();
+
+                // Yüklənmə zamanı göstərin
+                if (userCubit.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
                 // İstifadəçilər boşdursa, yüklənmə göstəricisi
                 if (users.isEmpty) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: Text(AppTexts.notFoundUser));
+                  // return const Center(child: CircularProgressIndicator());
                 }
                 // İstifadəçilərin siyahısını göstər
                 return ListView.builder(

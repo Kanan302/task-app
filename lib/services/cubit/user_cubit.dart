@@ -6,6 +6,7 @@ class UserCubit extends Cubit<List<dynamic>> {
   UserCubit() : super([]);
 
   List<dynamic> _users = []; // İstifadəçi məlumatlarını saxlamaq üçün dəyişən
+  bool isLoading = false; // Yüklənmə vəziyyəti
 
   // İstifadəçiləri yükləmək üçün metodu
   Future<void> loadUsers() async {
@@ -17,6 +18,15 @@ class UserCubit extends Cubit<List<dynamic>> {
     _users = data['users']; // İstifadəçiləri _users dəyişəninə təyin edin
     emit(
         _users); // İstifadəçiləri emit edin (müvafiq BlocBuilder-da yeniləmə üçün)
+  }
+
+  Future<void> fetchUsers() async {
+    isLoading = true; // Yüklənmə başlayır
+    emit(state); // Vəziyyəti yeniləyin
+    // Burada istifadəçiləri yükləyin
+    // ...
+    isLoading = false; // Yüklənmə bitdi
+    emit(_users); // İstifadəçiləri yayım
   }
 
   void filterUsers(String query) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:task/core/constants/app_colors.dart';
+import 'package:task/core/constants/app_routes.dart';
 import 'package:task/core/constants/app_texts.dart';
 import 'package:task/core/widgets/app_elevated_button.dart';
 import 'package:task/core/widgets/app_snack_bar.dart';
@@ -46,6 +47,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       context,
                       AppTexts.sendedLink,
                       backgroundColor: Colors.black,
+                    );
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppRoutes.login.path,
                     );
                   } else if (state is ResetPasswordFailure) {
                     AppSnackBar.show(context,
@@ -103,8 +108,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             context
                                 .read<
                                     ResetPasswordBloc>() // ResetPasswordBloc-dan istifadə et
-                                .add(ResetPasswordRequested(
-                                    email)); // E-poçt sıfırlama sorğusu göndər
+                                .add(
+                                  ResetPasswordRequested(email),
+                                ); // E-poçt sıfırlama sorğusu göndər
                           }
                         },
                       ),

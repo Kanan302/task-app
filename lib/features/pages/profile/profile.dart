@@ -20,101 +20,118 @@ class ProfilePage extends StatelessWidget {
             Consumer<ProfileProvider>(
               builder: (context, provider, child) {
                 return IconButton(
+                  icon: Icon(
+                    provider.editMode ? Icons.check : Icons.edit,
+                    color: AppColors.black,
+                  ),
+                  onPressed: () => provider.toggleEditMode(),
+                );
+              },
+            ),
+            Consumer<ProfileProvider>(
+              builder: (context, provider, child) {
+                return IconButton(
                   icon: const Icon(Icons.logout, color: AppColors.black),
-                  onPressed: () => provider.logout(context), // Çıxış əmri
+                  onPressed: () => provider.logout(context),
                 );
               },
             ),
           ],
         ),
         body: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Consumer<ProfileProvider>(
-                builder: (context, provider, child) {
-                  if (provider.isLoading) {
-                    // Yüklənmə zamanı göstərin
-                    return const CircularProgressIndicator();
-                  }
+          child: SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Consumer<ProfileProvider>(
+                  builder: (context, provider, child) {
+                    if (provider.isLoading) {
+                      // Yüklənmə zamanı göstərin
+                      return const CircularProgressIndicator();
+                    }
 
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: provider
-                            .pickImage, // Şəkil seçmə funksiyasını çağır
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: provider.imageBytes == null
-                              ? null
-                              : MemoryImage(
-                                  provider.imageBytes!), // Şəkili byte-dan çək
-                          child: provider.imageBytes == null
-                              ? const Icon(Icons.person, size: 50)
-                              : null,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      // Ad
-                      TextField(
-                        controller: provider.firstNameController,
-                        decoration: const InputDecoration(
-                          labelText: AppTexts.firstName,
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      // Soyad
-                      TextField(
-                        controller: provider.lastNameController,
-                        decoration: const InputDecoration(
-                          labelText: AppTexts.lastName,
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      // Yaş
-                      TextField(
-                        controller: provider.ageController,
-                        decoration: const InputDecoration(
-                          labelText: AppTexts.age,
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      // Ünvan
-                      TextField(
-                        controller: provider.addressController,
-                        decoration: const InputDecoration(
-                          labelText: AppTexts.address,
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () => provider.deleteProfile(context), // Profil silmə əmri
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.lightNavy,
-                              foregroundColor: AppColors.white,
-                            ),
-                            child: const Text(AppTexts.delete),
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: provider
+                              .pickImage, // Şəkil seçmə funksiyasını çağır
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: provider.imageBytes == null
+                                ? null
+                                : MemoryImage(provider
+                                    .imageBytes!), // Şəkili byte-dan çək
+                            child: provider.imageBytes == null
+                                ? const Icon(Icons.person, size: 50)
+                                : null,
                           ),
-                          ElevatedButton(
-                            onPressed: () => provider.saveProfile(context), // Profil saxlama əmri
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.lightNavy,
-                              foregroundColor: AppColors.white,
-                            ),
-                            child: const Text(AppTexts.save),
+                        ),
+                        const SizedBox(height: 16),
+                        // Ad
+                        TextField(
+                          controller: provider.firstNameController,
+                          decoration: const InputDecoration(
+                            labelText: AppTexts.firstName,
+                            border: OutlineInputBorder(),
                           ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
+                        ),
+                        const SizedBox(height: 15),
+                        // Soyad
+                        TextField(
+                          controller: provider.lastNameController,
+                          decoration: const InputDecoration(
+                            labelText: AppTexts.lastName,
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        // Yaş
+                        TextField(
+                          controller: provider.ageController,
+                          decoration: const InputDecoration(
+                            labelText: AppTexts.age,
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        // Ünvan
+                        TextField(
+                          controller: provider.addressController,
+                          decoration: const InputDecoration(
+                            labelText: AppTexts.address,
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        if (provider
+                            .editMode) // Yalnız edit rejimində butonları göstərin
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () => provider.deleteProfile(
+                                    context), // Profil silmə əmri
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.lightNavy,
+                                  foregroundColor: AppColors.white,
+                                ),
+                                child: const Text(AppTexts.delete),
+                              ),
+                              ElevatedButton(
+                                onPressed: () => provider.saveProfile(
+                                    context), // Profil saxlama əmri
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.lightNavy,
+                                  foregroundColor: AppColors.white,
+                                ),
+                                child: const Text(AppTexts.save),
+                              ),
+                            ],
+                          ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),
